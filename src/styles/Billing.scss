@@ -1,0 +1,76 @@
+.billing-container {
+     padding-left: 80px;
+     padding-top: 20px;
+     padding-right: 100px;
+     padding-bottom: 50px;
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     color: #949496;
+     position: relative;
+     overflow: hidden;
+     min-height: 100vh;
+}
+
+.billing-title {
+     font-size: 2.7rem;
+     color: #f3b840;
+     font-weight: 900;
+     margin-bottom: 0px;
+     text-transform: uppercase;
+}
+
+.billings-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding-top: 30px;
+}
+
+.billing-item {
+     display: flex;
+     gap: 20px;
+     align-items: center;
+     button {
+          display: flex;
+          align-items: center;
+          width: 150px;
+          justify-content: center;
+          border-radius: 30px;
+          border: none;
+          cursor: pointer;
+          padding: 3px 0;
+          font-family: inherit;
+          color: #54575a;
+          background: #c1c1c1;
+          font-weight: bold;
+          svg {
+               width: 9px;
+               margin-left: 5px;
+               filter: brightness(0) saturate(100%) invert(32%) sepia(8%) saturate(209%) hue-rotate(169deg)
+                    brightness(101%) contrast(94%);
+          }
+     }
+     &.clear {
+        color: #dadada;
+        button {
+            background: #dadada;
+        }
+     }
+}
+
+.billing-p {
+     width: 200px;
+     font-weight: bold;
+     margin: 0;
+}
+
+.btn-down {
+     text-decoration: none;
+}
+
+@media screen and (max-width: 1100px) {
+     .billing-container {
+          padding: 30px 30px;
+     }
+}

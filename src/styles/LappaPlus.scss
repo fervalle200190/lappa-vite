@@ -1,0 +1,63 @@
+
+.plus-title {
+    font-size: 2.7rem;
+    color: #f3b840;
+    font-weight: 900;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+}
+
+.lappa-plus-container {
+    padding-left: 80px;
+    padding-top: 20px;
+    padding-right: 100px;
+    padding-bottom: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #949496;
+    position: relative;
+    overflow: hidden;
+}
+
+.cards-container {
+    display: flex;
+    align-items: baseline;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+    padding-top: 60px;
+}
+
+.plus-p {
+    width: 100%;
+    max-width: 660px;
+    font-size: 1.1rem;
+}
+
+.plus-btn-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    button {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #fff;
+        background: #eb5b28;
+        border: none;
+        height: 35px;
+        width: 250px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .cards-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .lappa-plus-container {
+        padding: 20px 30px;
+    }
+}

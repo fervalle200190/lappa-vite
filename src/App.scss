@@ -1,0 +1,41 @@
+body {
+     margin: 0;
+     font-family: 'Montserrat', sans-serif;
+}
+
+*, ::before, ::after {
+     box-sizing: border-box;
+     font-family: 'Montserrat', sans-serif;
+}
+
+button {
+     cursor: pointer;
+}
+
+.main-container {
+     display: flex;
+}
+
+.back-icon {
+     position: absolute;
+     right: -220px;
+     top: 150px;
+     width: 400px;
+     opacity: 0.2;
+ }
+
+
+.error-message {
+     position: absolute;
+     bottom: -50px;
+     color: #a00;
+     font-weight: 600;
+}
+
+ion-icon {
+     cursor: pointer;
+}
+
+.btn-submit:disabled {
+     background: #eb5c2852 !important;
+}
