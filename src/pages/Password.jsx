@@ -6,23 +6,24 @@ import { FormPassword } from "../components/FormPassword";
 import { FormToken } from "../components/FormToken";
 import Logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import LappaLogo from "../assets/LAPPA_LOGO_VECTOR.svg";
 
 export const Password = () => {
      const [resetForm, setResetForm] = useState("");
      const [secondToken, setSecondToken] = useState({ pass: "", codigo: "" });
      const [token, setToken] = useState("");
      const [isFetching, setIsFetching] = useState(false);
-     const navigate = useNavigate()
+     const navigate = useNavigate();
      const handleSubmit = async (e) => {
           e.preventDefault();
-          setIsFetching(true)
+          setIsFetching(true);
           let res = await resetPassword({
                params: {
                     celular: resetForm,
                },
           });
-          setIsFetching(false)
+          setIsFetching(false);
           if (res.error) return alert("El número no existe");
           setToken(res.result.token);
      };
@@ -41,15 +42,15 @@ export const Password = () => {
                },
           };
           let res = await resetPasswordToken(data);
-          if(res.result.mensaje) {
-               alert(res.result.mensaje)
-               return navigate("/")
+          if (res.result.mensaje) {
+               alert(res.result.mensaje);
+               return navigate("/");
           }
      };
      return (
           <div className="password-container">
                <Link to={"/"}>
-                    <ReactSVG src={Logo} />
+                    <img src={LappaLogo} width={300} />
                </Link>
                {token === "" ? (
                     <FormPassword
@@ -59,7 +60,11 @@ export const Password = () => {
                          handleSubmit={handleSubmit}
                     />
                ) : (
-                    <FormToken handleToken={handleToken} setSecondToken={setSecondToken} secondToken={secondToken} />
+                    <FormToken
+                         handleToken={handleToken}
+                         setSecondToken={setSecondToken}
+                         secondToken={secondToken}
+                    />
                )}
           </div>
      );

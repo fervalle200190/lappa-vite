@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
-export const LocationSelect = ({ search, setSearch, handleChange, url, name }) => {
+export const LocationSelect = ({ search, setSearch, handleChange, url, name, nameClass = '' }) => {
      const [locations, setLocations] = useState([]);
      const [onSelected, setOnSelected] = useState(false);
      const handleSearch = (e) => {
-          setOnSelected(false);
+          if(onSelected) {
+               setOnSelected(false);
+          }
           setSearch(e.target.value);
      };
 
@@ -26,13 +28,15 @@ export const LocationSelect = ({ search, setSearch, handleChange, url, name }) =
                     type="text"
                     name="location"
                     id="location"
+                    className={`${nameClass} input-select`}
+                    style={{paddingLeft: '15px'}}
                     onChange={(e) => {
                          handleSearch(e);
                     }}
                     value={search}
                />
                <div
-                    className={`options-container height-fixed ${
+                    className={`options-container-select height-fixed ${
                          search.length === 0 || onSelected ? "" : "show-select"
                     }`}
                     style={{ bottom: "-100px" }}

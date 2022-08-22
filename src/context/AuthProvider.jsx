@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { checkToken, getBills, getDriver, getLocations, getToken } from "../utils";
+import {
+     checkToken,
+     getBills,
+     getDriver,
+     getLocations,
+     getToken,
+} from "../utils";
 import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
@@ -27,24 +33,28 @@ export const AuthProvider = ({ children }) => {
                },
           };
           let dataResponse = await getDriver(dataToSend);
-          let info = JSON.parse(localStorage.getItem('user'))
-          console.log(info)
+          console.log(dataResponse, "data")
+          let info = JSON.parse(localStorage.getItem("user"));
           info = {
                ...info,
-               id: dataResponse.result.datos[0][0].id
-          }
-          console.log(info)
-          localStorage.setItem('user', JSON.stringify(info))
+               id: dataResponse.result.datos[0][0].id,
+          };
+          localStorage.setItem("user", JSON.stringify(info));
           const dataToLocations = {
                ...dataToSend,
                params: {
                     ...dataToSend.params,
                     model: "trans.punto_retiro",
-                    dominio: [["id", "=", dataResponse.result.datos[0][0].trans_pto_retiro]],
+                    dominio: [
+                         [
+                              "id",
+                              "=",
+                              dataResponse.result.datos[0][0].trans_pto_retiro,
+                         ],
+                    ],
                },
           };
           let locationResponse = await getLocations(dataToLocations);
-          console.log(locationResponse, "location")
           let locations = locationResponse.result.datos.map((location) => ({
                name: location[0].display_name,
                coor: location[0].pr_coordenadas,
@@ -56,7 +66,7 @@ export const AuthProvider = ({ children }) => {
                     uid: response.result.UID,
                     model: "asw.comprobante",
                     accion: "read_sudo",
-                    Ids: [33, 25],
+                    Ids:  [33, 25],
                },
           };
           const billingResponse = await getBills(dataToBilling);
@@ -79,20 +89,28 @@ export const AuthProvider = ({ children }) => {
 
      const firstToken = async (form) => {
           let response = await getToken(form);
-          
-          console.log(response)
           if (response.error) {
                setError(true);
+               return false;
+          }
+          if (response.result.token === "000000000000000") {
+               alert('Datos incorrectos')
                return false;
           }
           if (!response.result) {
                return false;
           }
-          localStorage.setItem("user", JSON.stringify({ token: response.result.token, uid: response.result.UID }));
+          localStorage.setItem(
+               "user",
+               JSON.stringify({
+                    token: response.result.token,
+                    uid: response.result.UID,
+               })
+          );
           setIsLogged(true);
           setError(false);
           updateData(response);
-          return false
+          return false;
      };
 
      const validateLogged = async (token) => {
@@ -111,7 +129,13 @@ export const AuthProvider = ({ children }) => {
           if (!response.result) {
                return;
           }
-          localStorage.setItem("user", JSON.stringify({ token: response.result.token, uid: response.result.UID }));
+          localStorage.setItem(
+               "user",
+               JSON.stringify({
+                    token: response.result.token,
+                    uid: response.result.UID,
+               })
+          );
           setIsLogged(true);
           updateData(response);
      };
@@ -137,5 +161,7 @@ export const AuthProvider = ({ children }) => {
           data,
      };
 
-     return <AuthContext.Provider value={stuff}>{children}</AuthContext.Provider>;
+     return (
+          <AuthContext.Provider value={stuff}>{children}</AuthContext.Provider>
+     );
 };

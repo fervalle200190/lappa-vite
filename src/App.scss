@@ -25,11 +25,19 @@ button {
  }
 
 
+ .show-select {
+     display: block !important;
+ }
+
 .error-message {
      position: absolute;
      bottom: -50px;
      color: #a00;
      font-weight: 600;
+}
+
+.error-red {
+     color: #c00;
 }
 
 ion-icon {
@@ -38,4 +46,8 @@ ion-icon {
 
 .btn-submit:disabled {
      background: #eb5c2852 !important;
+}
+
+.phone-icon svg {
+     height: 100px;
 }

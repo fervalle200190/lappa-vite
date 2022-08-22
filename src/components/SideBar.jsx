@@ -1,9 +1,10 @@
-import { LappaLogo } from "./LappaLogo";
+// import { LappaLogo } from "./LappaLogo";
 import { SideBarItem } from "./SideBarItem";
 import "../styles/SideBar.scss";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import LappaLogo from '../assets/LAPPA_LOGO_VECTOR.svg'
 
 const sideBarOptions = [
      {
@@ -45,7 +46,7 @@ export const SideBar = () => {
                          <ion-icon name="close-outline" onClick={handleClick}></ion-icon>
                     </div>
                     <Link to={`/`}>
-                         <LappaLogo />
+                         <img src={LappaLogo} width={300} />
                     </Link>
                     <div className="items-container">
                          {sideBarOptions.map((sideBarOption) => (

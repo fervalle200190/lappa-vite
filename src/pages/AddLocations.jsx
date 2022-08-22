@@ -6,12 +6,28 @@ import { LocationSelect } from "../components/LocationSelect";
 import { sendForm } from "../utils";
 import { useForm } from "../hooks/useForm";
 
-const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+const days = [
+     "Lunes",
+     "Martes",
+     "Miercoles",
+     "Jueves",
+     "Viernes",
+     "Sabado",
+     "Domingo",
+];
 
 export const AddLocations = () => {
      const [search, setSearch] = useState("");
      const [activeDays, setActiveDays] = useState({});
-     const { formState, onInputChange } = useForm({ address: "", phone: "", cellphone: "" });
+     const [error, setError] = useState({ phone: false, cellphone: false });
+     const { formState, onInputChange } = useForm({
+          address: "",
+          phone: "",
+          cellphone: "",
+          delivery: false,
+          pickUp: false,
+          elevator: false,
+     });
 
      const handleSubmit = async (e) => {
           if (e.target.matches(".add-btn")) {
@@ -25,6 +41,12 @@ export const AddLocations = () => {
                     formState.elevator == ""
                ) {
                     e.preventDefault();
+                    setError({
+                         ...error,
+                         cellphone: formState.phone === "",
+                         phone: formState.cellphone === ""
+                    });
+
                     return alert("Faltan algunos datos");
                }
                e.preventDefault();
@@ -56,15 +78,18 @@ export const AddLocations = () => {
                     },
                };
                const response = await sendForm(dataToSend);
-               if(response.result.datos) {
-                    alert("Datos actualizados correctamente")
+               if (response.result.datos) {
+                    alert("Datos actualizados correctamente");
                }
           }
      };
      return (
           <div className="add-location-container">
                <h1 className="location-title">Localidades</h1>
-               <form className="form-container-add-locations" onClick={handleSubmit}>
+               <form
+                    className="form-container-add-locations"
+                    onClick={handleSubmit}
+               >
                     <LocationSelect
                          search={search}
                          setSearch={setSearch}
@@ -83,10 +108,12 @@ export const AddLocations = () => {
                          />
                     </label>
                     <label>
-                         Celular
+                         <b className={`${error.cellphone ? "error-red" : ""}`}>
+                              Celular
+                         </b>
                          <div className="extra-container">
                               <input
-                                   type="text"
+                                   type="number"
                                    name="cellphone"
                                    onChange={onInputChange}
                                    value={formState.cellphone}
@@ -96,65 +123,127 @@ export const AddLocations = () => {
                          </div>
                     </label>
                     <label>
-                         Teléfono fijo
-                         <input type="text" name="phone" id="phone" value={formState.phone} onChange={onInputChange} />
+                         <b className={`${error.phone ? "error-red" : ""}`}>
+                              Teléfono fijo
+                         </b>
+                         <input
+                              type="number"
+                              name="phone"
+                              id="phone"
+                              value={formState.phone}
+                              onChange={onInputChange}
+                         />
                     </label>
                     <label>
                          Días de arribo a la localidad
                          <div
                               className="checks-container"
-                              onChange={(e) => setActiveDays({ ...activeDays, [e.target.name]: e.target.checked })}
+                              onChange={(e) =>
+                                   setActiveDays({
+                                        ...activeDays,
+                                        [e.target.name]: e.target.checked,
+                                   })
+                              }
                          >
                               {days.map((day) => (
                                    <label key={day}>
                                         {day}
-                                        <input type="checkbox" value={day} name={day} className={"checkbox"} />
+                                        <input
+                                             type="checkbox"
+                                             value={day}
+                                             name={day}
+                                             className={"checkbox"}
+                                        />
                                    </label>
                               ))}
                          </div>
                     </label>
                     <label>
                          Entrega a domicilio
-                         <div className="radios-container" onChange={onInputChange}>
+                         <div
+                              className="radios-container"
+                              onChange={onInputChange}
+                         >
                               <label>
                                    Si
-                                   <input type="radio" name="delivery" value={true} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="delivery"
+                                        value={true}
+                                        className="radio-check"
+                                   />
                               </label>
                               <label>
                                    No
-                                   <input type="radio" name="delivery" value={false} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="delivery"
+                                        value={false}
+                                        className="radio-check"
+                                        defaultChecked
+                                   />
                               </label>
                          </div>
                     </label>
                     <label>
                          Retira a domicilio
-                         <div className="radios-container" onChange={onInputChange}>
+                         <div
+                              className="radios-container"
+                              onChange={onInputChange}
+                         >
                               <label>
                                    Si
-                                   <input type="radio" name="pickUp" value={true} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="pickUp"
+                                        value={true}
+                                        className="radio-check"
+                                   />
                               </label>
                               <label>
                                    No
-                                   <input type="radio" name="pickUp" value={false} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="pickUp"
+                                        value={false}
+                                        className="radio-check"
+                                        defaultChecked
+                                   />
                               </label>
                          </div>
                     </label>
                     <label>
                          Cuenta con autoelevador
-                         <div className="radios-container" onChange={onInputChange}>
+                         <div
+                              className="radios-container"
+                              onChange={onInputChange}
+                         >
                               <label>
                                    Si
-                                   <input type="radio" name="elevator" value={true} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="elevator"
+                                        value={true}
+                                        className="radio-check"
+                                   />
                               </label>
                               <label>
                                    No
-                                   <input type="radio" name="elevator" value={false} className="radio-check" />
+                                   <input
+                                        type="radio"
+                                        name="elevator"
+                                        value={false}
+                                        className="radio-check"
+                                        defaultChecked
+                                   />
                               </label>
                          </div>
                     </label>
-                    <button type="submit" className="add-btn">
-                         Agregar
-                    </button>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                         <button type="submit" className="add-btn">
+                              Agregar
+                         </button>
+                    </div>
                </form>
                <ReactSVG src={LogoBack} className="back-icon" />
           </div>

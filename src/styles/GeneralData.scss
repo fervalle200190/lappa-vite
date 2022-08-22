@@ -7,6 +7,10 @@
      overflow: hidden;
 }
 
+.select-general {
+     width: 500px;
+}
+
 .form-container-general {
      display: flex;
      flex-direction: column;
@@ -108,5 +112,8 @@
      }
      .data-title {
           text-align: center;
+     }
+     .select-general {
+          width: 100%;
      }
 }

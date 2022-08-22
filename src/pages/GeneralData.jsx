@@ -1,5 +1,5 @@
-import { Select } from "../components/Select";
 import { ReactSVG } from "react-svg";
+import Select from "react-select";
 import "../styles/GeneralData.scss";
 import LogoBack from "../assets/nav-op.svg";
 import Arrow from "../assets/arrow-down-outline.svg";
@@ -37,9 +37,17 @@ const spanishSelect = {
 
 export const GeneralData = () => {
      const [baseImg, setbaseImg] = useState("");
-     const { formState, onInputChange } = useForm({ comercialName: "", phone: "", website: "", email: "" });
-     const [transValid, setTransValid] = useState({ tipoTransporte: [], notTransport: [] });
-     const [company, setCompany] = useState([]);
+     const { formState, onInputChange } = useForm({
+          comercialName: "",
+          phone: "",
+          website: "",
+          email: "",
+     });
+     const [transValid, setTransValid] = useState({
+          tipoTransporte: [],
+          notTransport: [],
+     });
+     const [company, setCompany] = useState("");
      const [items, setItems] = useState([]);
      const [noItems, setNoItems] = useState([]);
      const convertToBaseFour = (image) => {
@@ -66,8 +74,14 @@ export const GeneralData = () => {
      };
      const handleOptions = async () => {
           const response = await getOptions();
-          let tipoTransporte = response.tipo_transportista.map((kind) => ({ label: kind[1], value: kind[0] }));
-          let notTransport = response.no_transporta.map((item) => ({ label: item[1], value: item[0] }));
+          let tipoTransporte = response.tipo_transportista.map((kind) => ({
+               label: kind[1],
+               value: kind[0],
+          }));
+          let notTransport = response.no_transporta.map((item) => ({
+               label: item[1],
+               value: item[0],
+          }));
           setTransValid({
                tipoTransporte,
                notTransport,
@@ -84,7 +98,7 @@ export const GeneralData = () => {
                     formState.website === "" ||
                     formState.email === "" ||
                     baseImg === "" ||
-                    company.length <= 0 ||
+                    company === "" ||
                     items.length <= 0 ||
                     noItems.length <= 0
                ) {
@@ -107,9 +121,13 @@ export const GeneralData = () => {
                               trans_telefono: formState.phone,
                               trans_pagina_web: formState.website,
                               trans_email: formState.email,
-                              trans_tipo_ent: company[0].value, //emp: empresa, ca: camionero, co: comisionista,
-                              tipo_transportista: items.map((item) => item.value),
-                              no_transporta: noItems.map((noItem) => noItem.value),
+                              trans_tipo_ent: company.value, //emp: empresa, ca: camionero, co: comisionista,
+                              tipo_transportista: items.map(
+                                   (item) => item.value
+                              ),
+                              no_transporta: noItems.map(
+                                   (noItem) => noItem.value
+                              ),
                          },
                     },
                };
@@ -171,18 +189,13 @@ export const GeneralData = () => {
                     </label>
                     <label style={{ position: "relative" }}>
                          Tipo de empresa
-                         <MultiSelect
-                              className="multi-select"
-                              options={companies}
-                              hasSelectAll={false}
-                              disableSearch={true}
-                              onChange={setCompany}
+                         <Select
+                              className="select-general"
                               value={company}
-                              overrideStrings={spanishSelect}
+                              onChange={setCompany}
+                              options={companies}
+                              placeholder='Selecciona...'
                          />
-                         <span style={{ fontSize: ".6rem", position: "absolute", bottom: "-15px" }}>
-                              *Por favor seleccionar solo una opción
-                         </span>
                     </label>
                     <label>
                          Tipo de transporte
@@ -211,14 +224,23 @@ export const GeneralData = () => {
                                    Subir logo
                                    <ReactSVG src={Arrow} />
                               </div>
-                              <input type="file" style={{ display: "none" }} onChange={handleImage} />
+                              <input
+                                   type="file"
+                                   style={{ display: "none" }}
+                                   onChange={handleImage}
+                              />
                          </label>
                          <span className="upload-legend">
-                              Subir en fondo blanco y en tamaño máximo de 100px x 100px
+                              Subir en fondo blanco y en tamaño máximo de 100px
+                              x 100px
                          </span>
                     </div>
                     <div className="save-btn-container">
-                         <input type="submit" value="guardar" className="save-btn" />
+                         <input
+                              type="submit"
+                              value="guardar"
+                              className="save-btn"
+                         />
                     </div>
                </form>
                <ReactSVG src={LogoBack} className="back-icon" />

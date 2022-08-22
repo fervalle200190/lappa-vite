@@ -7,6 +7,7 @@ import IconTwo from "../assets/2.svg";
 import IconThree from "../assets/3.svg";
 import IconFour from "../assets/4.svg";
 import { sendData } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const boxInfo = [
      {
@@ -23,11 +24,12 @@ const boxInfo = [
      },
      {
           description: `Soporte técnico vía chat, whatsapp, teléfono y correo electronico.`,
-          icon: <ReactSVG src={IconFour} />,
+          icon: <ReactSVG className="phone-icon" src={IconFour} />,
      },
 ];
 
 export const LappaPlus = () => {
+     const navigate = useNavigate()
      const getSuscription = async () => {
           const dataToSend = {
                params: {
@@ -42,6 +44,7 @@ export const LappaPlus = () => {
           };
           const data = await sendData(dataToSend);
           console.log(data);
+          location.assign(data.result.datos.url)
      };
      return (
           <div className="lappa-plus-container">
