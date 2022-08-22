@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
                },
           };
           let dataResponse = await getDriver(dataToSend);
-          console.log(dataResponse, "data")
           let info = JSON.parse(localStorage.getItem("user"));
           info = {
                ...info,
@@ -66,7 +65,7 @@ export const AuthProvider = ({ children }) => {
                     uid: response.result.UID,
                     model: "asw.comprobante",
                     accion: "read_sudo",
-                    Ids:  [33, 25],
+                    Ids: [33, 25],
                },
           };
           const billingResponse = await getBills(dataToBilling);
